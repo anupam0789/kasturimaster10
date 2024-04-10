@@ -1,0 +1,127 @@
+html,body{line-height:normal;outline:0!important}
+*{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;margin:0;padding:0;transition:all .3s ease 0s;outline:0!important;text-decoration:none!important}
+
+::placeholder{color:#D2D2D2;opacity:1}
+:-ms-input-placeholder{color:#D2D2D2}
+::-ms-input-placeholder{color:#D2D2D2}
+::-moz-selection{color:#fff;background:#1EAE63}
+::selection{color:#fff;background:#1EAE63}
+
+body{font-family:Poppins,serif !important;margin:0;padding:0;background:none}
+.progressbar {display: none !important;}
+.registration {display: grid;grid-template-columns: 41% 59%;justify-content: space-between;}
+.registration .registration-leftbar {background: url("../images/bg-advisor.jpg") no-repeat 0 0 / cover;min-height: 100vh;padding: 7% 8% 10% 0;display: flex;justify-content: center;align-items: center;}
+.error {color: #f00;font-size: 14px;padding: 6px 0;display: inline-block;}
+.registration .registration-leftbar .registrations-steps {}
+.registration .registration-leftbar .registrations-steps .steps {color: #fff;font-size: 18px; padding: 8px 0;}
+.registration .registration-leftbar .registrations-steps .steps .icon {display: inline-block;height: 36px;width: 36px;background: #fff;color: #118AEF;text-align: center;border-radius: 50%;font-size: 18px;line-height: 36px;margin-right: 20px;}
+.registration .registration-leftbar .registrations-steps .active span {background: #118AEF !important;color: #fff !important;font-weight: 500;}
+.registration .registration-leftbar .registrations-steps .done span {display: inline-block;height: 36px;width: 36px;background: #118AEF;color: #fff;text-align: center;border-radius: 50%;font-size: 20px;line-height: 36px;margin-right: 20px;}
+.success-icon .material-icons-outlined {color: #1EAE63;font-size: 60px;}
+.iti__flag-container, .iti #phone {height: 62px !important;}
+.registration .registration-leftbar .reg-advisor-container {margin-top: 24%;}
+.registration .registration-leftbar .reg-advisor-container .reg-advisor-content {margin: 15px 0;}
+.registration .registration-leftbar .reg-advisor-container .reg-advisor-content .icon {background: rgba(255,255,255,0.4);
+height: 70px;
+width: 70px;
+border-radius: 6px;
+display: flex;
+justify-content: center;
+align-items: center;}
+.registration .registration-leftbar .reg-advisor-container .reg-advisor-content .icon span {color: #fff;font-size: 42px;}
+.registration .registration-leftbar .reg-advisor-container .reg-advisor-content h2 {font-size: 20px;font-weight: 600;color: #fff;font-family: Poppins,serif;}
+.registration .registration-leftbar .reg-advisor-container .reg-advisor-content p {font-size: 14px;color: #fff;font-weight: 300;line-height: 24px;}
+
+.registration .registration-form {padding: 2% 3%;background:url("../images/bgform.jpg") no-repeat 0 0 / cover}
+.registration .registration-form .registration-header {}
+.registration .registration-form .registration-header .logo {}
+.registration .registration-form .registration-header .logo a {}
+.registration .registration-form .registration-header .logo a img {height: 60px;}
+.registration .registration-form .registration-header .sign-in {margin-top: 14px;text-align: right;}
+.registration .registration-form .registration-header .sign-in p {margin: 0;font-size: 15px;}
+.registration .registration-form .registration-header .sign-in a {font-size: 14px;text-transform: uppercase;padding: 8px 22px;background: #1EAE63;border-color: #1EAE63;margin-left: 12px;font-weight: 500;}
+.registration .registration-body {margin-top: 80px;}
+.registration .registration-body h1 {color: #118AEF;font-size: 36px;line-height: 60px;}
+.registration .registration-body h1 span {font-size: 30px;display: inline-block;width: 100%;color:#000}
+.registration .registration-body p {color: #757575;font-size: 16px;padding-right: 20%;line-height: 28px;}
+.registration .registration-body p a {color: #118AEF;font-weight: 600;}
+.registration .registration-body .form-row {margin-top: 20px;}
+.registration .registration-body .form-row p {padding-top: 12px;}
+.registration .registration-body .form-row p a {}
+.registration .registration-body .form-row label {width: 100%;padding-bottom: 12px;}
+.registration .registration-body .form-row input[type="email"], .registration .registration-body .form-row input[type="text"], .registration .registration-body .form-row select, .registration .registration-body .form-row input[type="password"], .registration .registration-body .form-row input[type="file"] {height: 62px;width: 450px;border: #CFCFCF 1px solid;padding: 15px;margin-right:10px;background: #fff;}
+.button-row-full {grid-area: 3 / 1 / 4 / 3;}
+.button-row-full .link-terms-condition {margin-bottom: 20px;}
+.button-row-full .link-terms-condition input[type="checkbox"] {margin-right: 6px;}
+.button-row-full .link-terms-condition a {font-weight: 500;}
+.registration .registration-body .form-row .otp-textbox {height: 62px !important;border: #CFCFCF 1px solid !important;padding: 15px !important;width: 76px !important;margin-right: 10px !important;}
+.registration .registration-body .form-row .btn{background: #1EAE63;height: 62px;border-radius: 0;color: #fff;font-size: 18px;font-weight: 500;padding: 10px 26px;vertical-align: top;border: 0;line-height: 40px;}
+.registration .registration-body .form-row .btn .material-icons-outlined  {position: relative;top: 6px;left: 4px;}
+
+.form-row-flex {display: grid;grid-template-columns: 49% 49%;justify-content: space-between;}
+.form-row-flex .form-row {}
+.form-row-flex .form-row input[type="text"], .form-row-flex .form-row input[type="email"], .form-row-flex .form-row select, .form-row-flex .form-row input[type="password"], .form-row-flex .form-row input[type="file"] {width:100% !important}
+#tncModal p {font-size: 14px;line-height: 24px;}
+
+
+.progressbar {counter-reset: step;
+display: flex;
+justify-content: space-between;
+padding: 0;
+margin-bottom: 50px;
+}
+
+.progressbar li {
+  position: relative;
+list-style: none;
+float: left;
+width: 25%;
+text-align: center;
+font-size: 12px;
+}
+
+/* Circles */
+.progressbar li:before {
+  content: counter(step);
+counter-increment: step;
+width: 30px;
+height: 30px;
+border: 1px solid #2979FF;
+display: block;
+text-align: center;
+margin: 0 auto 10px auto;
+border-radius: 50%;
+background-color: #fff;
+line-height: 29px;
+font-size: 12px;
+}
+
+.progressbar li:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: orange ;
+  top: 20px; /*half of height Parent (li) */
+  left: -50%;
+  z-index: -1;
+}
+
+.progressbar li:first-child:after {
+  content: none;
+}
+
+.progressbar li.active:before {
+  background: #118AEF;
+content: "✔";
+color: #fff;
+}
+
+.progressbar li.active + li:after {
+  background: #00E676;
+}
+
+.form-row-flex .form-row .input-group-append input {width: 200px !important;margin-right: 0 !important;}
+.input-group-text {font-size: 14px !important;}
+
+.info-underneath {font-size: 12px;color: #1EAE63;display:inline-block}

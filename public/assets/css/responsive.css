@@ -1,0 +1,56 @@
+@media(min-width:768px) and (max-width:1024px) {
+    .registration {grid-template-columns: 100%;}
+    .registration .registration-leftbar {height: auto;padding: 2%;order: 2;display: none;}
+    .registration .registration-leftbar .reg-advisor-container {margin-top: 2%;display: grid;grid-template-columns: 49% 49%;}
+    .registration .registration-form {order: 1;padding: 2% 3% 10% 3%;height: 100vh;}
+    
+    .registration .registration-leftbar .registrations-steps {display: grid;grid-template-columns: auto auto auto auto;
+	justify-content: space-between;width: 100%;}
+    .registration .registration-leftbar .registrations-steps .steps {color: #fff;font-size: 14px;padding: 8px 0;}
+    .registration .registration-leftbar .registrations-steps .steps .icon, .registration .registration-leftbar .registrations-steps .done span {height: 28px;width: 28px;font-size: 14px;line-height: 30px;margin-right: 8px;}
+    .account-created {text-align:center}
+    .account-created p {padding-right: 0 !important;}
+    .progressbar {display: flex !important;}
+    .input-group-text {font-size: 14px !important;}
+    .form-row-flex .form-row .input-group-append input {width: 180px !important;}
+}
+
+@media(min-width:768px) and (max-width:1024px) and (orientation:landscape) {
+    .form-row-flex .form-row .input-group-append input {width: 300px !important;}
+}
+
+@media(max-width:767px) {
+    .progressbar {display: flex !important;}
+    .registration {grid-template-columns: 100%;}
+    .registration .registration-leftbar {height: auto;padding: 2%;order: 2;padding-top: 5%;}
+    .registration .registration-leftbar .reg-advisor-container {margin-top: 0;}
+    .registration .registration-form {order: 1;padding: 2% 3% 10% 3%;height: auto;}
+    .registration .registration-form .registration-header .sign-in a {margin-top: 6px;font-size: 13px;}
+    .registration .registration-form .registration-header .sign-in p {font-size: 14px;}
+    .registration .registration-body h1 {font-size: 26px;line-height: 42px;}
+    .registration .registration-body p {font-size: 14px;padding-right: 0;line-height: 24px;}
+    .registration .registration-body .form-row input[type="email"], .registration .registration-body .form-row input[type="text"], .registration .registration-body .form-row select {height: auto;width: 100%;font-size: 14px;}
+    .registration .registration-body .form-row .btn {height: auto;font-size: 16px;margin-top: 10px;padding: 8px 24px;}
+    .registration .registration-leftbar .reg-advisor-container .reg-advisor-content p {font-size: 13px;line-height: 22px;}
+    .registration .registration-leftbar .reg-advisor-container .reg-advisor-content h2 {font-size: 16px;}
+    .registration .registration-leftbar .reg-advisor-container .reg-advisor-content .icon {height: 50px;width: 50px;}
+    .registration .registration-leftbar .reg-advisor-container .reg-advisor-content .icon span {font-size: 28px;}
+    .registration .registration-body .form-row label {font-size: 14px;}
+    .registration .registration-leftbar .reg-advisor-container .reg-advisor-content {margin: 10px 0;}
+    .registration .registration-body .form-row .otp-textbox {height: auto !important;width: 66px !important;}
+    .form-row-flex {grid-template-columns: 100%;}
+    .registration .registration-body .form-row {margin-top: 10px;}
+    .registration .registration-body .form-row label {padding-bottom: 8px;}
+    .button-row-full {grid-area: inherit;}
+    .button-row-full .link-terms-condition {font-size: 14px;}
+    .account-created {text-align:center}
+    .account-created p {padding-right: 0 !important;}
+    .registration .registration-body {margin-top: 40px;}
+    .hideit {display:none !important}
+    .input-group-text {font-size: 13px !important;}
+    .form-row-flex .form-row .input-group-append input {width: 180px !important;}
+}
+
+@media(max-width:767px) and (orientation:landscape) {
+    .form-row-flex .form-row .input-group-append input {width: auto !important;}
+}
