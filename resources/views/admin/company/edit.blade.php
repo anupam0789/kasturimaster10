@@ -140,8 +140,8 @@
                                 <label for="mobile">Status</label>
                                 <select class="form-control @error('_CMstatus') is-invalid @enderror" id="_CMstatus" name="_CMstatus">
                                     <option value="">Select Status</option> 
-                                       <option value="{{ $company->_CMstatus }}" @if($company->_CMstatus == '1') selected @endif>Enable</option>
-                                       <option value="{{ $company->_CMstatus }}"@if($company->_CMstatus == '0') selected @endif>Disable</option>
+                                       <option value="1" @if($company->_CMstatus == '1') selected @endif>Enable</option>
+                                       <option value="0"@if($company->_CMstatus == '0') selected @endif>Disable</option>
                                     
                                 </select>    
                                 
@@ -188,7 +188,7 @@
                   <hr>
                   
                     @if($planEventGroup)
-                    @foreach($planEventGroup as $groupData)
+                    @foreach($planEventGroup as $groupData) 
                     <ul class="list-group">
                         <li class="list-group-item">
                             <div class="ms-2 me-auto">
@@ -210,6 +210,8 @@
                                         <input type="hidden" name="company_plan[{{ $i }}][eventTitle]"  value="{{ $data ? $data->eventTitle : '' }}" />
                                         <input type="hidden" name="company_plan[{{ $i }}][groupId]"  value="{{ $data ? $data->groupId : '' }}" />
                                         <input type="hidden" name="company_plan[{{ $i }}][groupName]"  value="{{ $data ? $data->groupName : '' }}" />
+                                        <input type="hidden" name="company_plan[{{ $i }}][event]"  value="@if(!isset($data->event)) @else {{  $data->event }} @endif" />
+                                        <input type="hidden" name="company_plan[{{ $i }}][eventValue]"  value="@if(!isset($data->eventValue)) @else {{  $data->eventValue }} @endif" />   
                                         
                                     @endif
                                     @php $i++; @endphp
@@ -234,54 +236,49 @@
   </div> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
   <script>
-    $('#updatePlan').click(function(){
-            
-        $.ajax({
-            url: "{{ route('admin.update.plan')}}",
-            type: 'post',
-            data:$("#myForm").serialize(), 
-            success: function(data) {  
-                if(data==true)
-                {
-                    toastr.options.timeOut = 1500; // 1.5s 
-                    toastr.success('Company Plan updated successfully');
-                    window.location.href = '/admin/company-plan/edit/{{ $company->_CMid }}?status=active'; 
-                       
-                }else{
-                    toastr.options.timeOut = 1500; // 1.5s 
-                    toastr.error('Something wentt wrong'); 
-                } 
-            }   
-        });
-            
+    $('#updatePlan').click(function(){ 
+      $.ajax({
+        url: "{{ route('admin.update.plan')}}",
+        type: 'post',
+        data:$("#myForm").serialize(), 
+        success: function(data) {  
+          if(data==true)
+          {
+            toastr.options.timeOut = 1500; // 1.5s 
+            toastr.success('Company Plan updated successfully');
+            window.location.href = '/admin/company-plan/edit/{{ $company->_CMid }}?status=active'; 
+                  
+          }else{
+            toastr.options.timeOut = 1500; // 1.5s 
+            toastr.error('Something wentt wrong'); 
+          } 
+        }   
+      });   
     });
 
-    $('#updateDetail').click(function(){
-            
-            $.ajax({
-                url: "{{ route('admin.update.plandetails')}}",
-                type: 'post',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data:$("#updateDetailForm").serialize(), 
-                success: function(data) {  
-                    if(data==true)
-                    {
-                        toastr.options.timeOut = 1500; // 1.5s 
-                        toastr.success('Company Plan updated successfully');
-                        location.reload();
-                        window.location.href = '/admin/company-plan/edit/{{ $company->_CMid }}';
-                    }else{
-                        toastr.options.timeOut = 1500; // 1.5s 
-                        toastr.error('Something wentt wrong'); 
-                    } 
-                }   
-            });
-                
-        });
-     
-         
-    
-   
+    $('#updateDetail').click(function(){ 
+      $.ajax({
+        url: "{{ route('admin.update.plandetails')}}",
+        type: 'post',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data:$("#updateDetailForm").serialize(), 
+        success: function(data) {  
+          if(data==true)
+          {
+            toastr.options.timeOut = 10000; // 1.5s 
+            toastr.success('Company Plan updated successfully');
+            location.reload();
+            setTimeout(function(){
+                window.location.href = '/admin/company-plan/edit/{{ $company->_CMid }}';
+            }, 10000);
+              
+          }else{
+            toastr.options.timeOut = 1500; // 1.5s 
+            toastr.error('Something wentt wrong'); 
+          } 
+        }   
+      });  
+    }); 
   </script>
   
   @endsection

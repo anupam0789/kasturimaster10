@@ -2,7 +2,7 @@
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/admin/dashboard" class="brand-link">
-      <img src="{{ asset('/admin/images/logo_white.jpg') }}" height="20px" height="20px" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{ asset('/admin/images/logo_white.jpg') }}" height="20px" height="20px" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Kasturi Master</span>
     </a>
 
@@ -49,7 +49,7 @@
             <a href="{{ route('admin.customers')}}" class="nav-link @if(Route::current()->getName() == 'admin.customers') active @endif">
               <i class="nav-icon fas fa-user"></i>
               <p>
-                Customers
+                Customer Leads
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
@@ -63,8 +63,10 @@
               </p>
             </a>
           </li> 
-          <li class="nav-item">
-            <a href="#" class="nav-link @if(Route::current()->getName() == 'admin.users') active @endif">
+          
+          <li class="nav-item @if(Route::current()->getName() == 'admin.users' 
+          || Route::current()->getName() == 'admin.add-user') menu-open @endif">
+            <a href="#" class="nav-link @if(Route::current()->getName() == 'admin.users' || Route::current()->getName() == 'admin.add-user') active @endif">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Users
@@ -80,7 +82,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('admin.add-user')}}" class="nav-link">
+                <a href="{{ route('admin.add-user')}}" class="nav-link @if(Route::current()->getName() == 'admin.add-user') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add User</p>
                 </a>

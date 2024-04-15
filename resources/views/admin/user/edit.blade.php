@@ -72,10 +72,10 @@
                   </div>
                   <div class="form-group">
                     <label for="roles">Roles</label>
-                    <select class="form-control @error('roles') is-invalid @enderror" id="roles" name="roles">
+                    <select class="form-control @error('role') is-invalid @enderror" id="role" name="role">
                         <option value="">Select Role</option>
-                        <option value="0">Developer</option>
-                        <option value="1">Admin</option>
+                        <option value="0" @if($user->type==0) selected @endif>Developer</option>
+                        <option value="1" @if($user->type==1) selected @endif>Admin</option>
                     </select>
                     @error('roles')
                     <span class="invalid-feedback" role="alert">
@@ -84,6 +84,7 @@
                     @enderror    
                   </div>
                 </div>
+                <input type="hidden" name="userId" id="userId" value="{{ $user->id }}" >
                 <!-- /.card-body -->
 
                 <div class="card-footer">

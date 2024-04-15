@@ -35,7 +35,7 @@ class CompanyController extends Controller
         $companies = $companiesQuery;
         $data['PlanDetails'] = DB::table('mm_companymaster')
             ->leftJoin('plans', 'mm_companymaster._CPlanId', '=', 'plans.id')
-            ->select('_CMid', '_CMcompanyName', '_CMmobile', '_CMemail', '_CMname', 'plans.id', 'plans.name', 'plans.price')->get();  
+            ->select('_CMid', '_CMcompanyName', '_CMmobile', '_CMemail', '_CMname','_CMcreatedOn', 'plans.id', 'plans.name', 'plans.price')->get();  
         return view('admin.company.index', compact('companies'),['data' => $data]);
     }
 
@@ -130,7 +130,7 @@ class CompanyController extends Controller
             array_push($finalArray, $temp);
         } 
         $params = [];
-        $getData = json_encode($finalArray);
+        $getData = json_encode($finalArray); 
         $params['_CPlanData'] = $getData;
         $params['_CPlanId'] = $request->input('plan_type');
         $updateData = Company::where('_CMid', $request->input('company_id'))->update($params);
@@ -138,12 +138,12 @@ class CompanyController extends Controller
       
     }
 
-    public function updateCompanyPlan(Request $request) {
+    public function updateCompanyPlan(Request $request) { 
         DB::table('mm_companymaster')
             ->where('_CMid', $request->companyId)
             ->update(['_CPlanId' => $request->planid]);
         //Company::where('_CMid',$request->companyid)->update(['_CPlanId'=>$request->planid]); 
-        $planToEvent = PlanToEvent::where('plan_id',$request->planid)->distinct('event_id')->get(); 
+        $planToEvent = PlanToEvent::where('plan_id',$request->planid)->get(); 
         $finalArray = array();
 
         if($request->company_plan){
@@ -160,11 +160,14 @@ class CompanyController extends Controller
                         ->where('plan_events.id', $rec->event_id)
                         ->get(); 
                 foreach( $plan_events  as  $item ) {
+                  
                    $temp['eventId'] = $item->id;
                    $temp['eventTitle']= $item->name;
                    $temp['event']= $item->event;
-                   if($rec['eventId'] == $item->id ) {
-                    $temp['eventValue']= ($rec['eventValue'] != null)?$rec['eventValue']:'NULL';
+                   if($rec->event_id == $item->id ) {
+                    $temp['eventValue']= ($rec['value'] != null)?$rec['value']:'NULL';
+                   }else{
+                    $temp['eventValue'] =null;
                    } 
                    $temp['groupId']= $item->groupId;
                    $temp['groupName']= $item->groupName;
@@ -172,6 +175,7 @@ class CompanyController extends Controller
                 array_push($finalArray, $temp);
             }
         }
+         
         DB::table('mm_companymaster')
             ->where('_CMid', $request->companyId)
             ->update(['_CPlanData' =>'']);
@@ -217,8 +221,7 @@ class CompanyController extends Controller
         return redirect()->route('admin.company.index')->with('message', __('Company deleted successfully.'));
     }
     public function updateCompanyPlanDetails(Request $request){
-        
-         
+       
         DB::table('mm_companymaster')
             ->where('_CMid', $request->_CMid)
             ->update($request->toArray());

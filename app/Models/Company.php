@@ -8,5 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'mm_companymaster';
+    protected $fillable = [
+        '_CMDomain',
+    ];
 }

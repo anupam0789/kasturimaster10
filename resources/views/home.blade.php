@@ -245,6 +245,46 @@
         }
       ]
     }
+    {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Kasturi HR",
+          "legalName": "Kasturi HR",
+          "description": "KASTURI HR, or human resources management system developed by Megamax services, is a suite of software applications used to manage human resources and related processes throughout the employee lifecycle.",
+          "url": "https://kasturihr.com",
+          "logo": "https://kasturihr.com/assets/images/logo.png",
+          "foundingDate": "2023-11-01",
+          "founders": [
+            {
+              "@type": "Person",
+              "name": "Rajesh Singh"
+            }
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "C-56, A/12, Technopolis IT Hub",
+            "addressLocality": "Sector-62",
+            "addressRegion": "Noida",
+            "postalCode": "201309",
+            "addressCountry": "India"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Service",
+            "telephone": "1800 257 1003",
+            "email": "sales@kasturihr.com",
+            "contactOption": "TollFree",
+            "areaServed": "India"
+          },
+          "sameAs": [
+            "https://www.facebook.com/kasturihrms",
+            "https://twitter.com/kasturihr",
+            "https://www.linkedin.com/company/kasturihr",
+            "https://www.instagram.com/kasturihrms/",
+            "https://www.youtube.com/@KasturiHR",
+            "https://in.pinterest.com/kasturihr/"
+          ]
+        }
     </script>
 
 @endsection

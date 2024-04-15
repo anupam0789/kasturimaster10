@@ -43,7 +43,7 @@
                   <tr>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td><span class="@if($user->type =='developer') right badge badge-danger @else badge badge-info right  @endif">{{ $user->type }}</span></td> 
+                    <td><span class="@if($user->type ==0) right badge badge-danger @else badge badge-info right  @endif">@if($user->type==0) Developer @else Admin @endif</span></td> 
                     <td><a href="{{ route('admin.user.edit',$user->id)}}" ><i class="fas fa-edit"><i></a></td>         
                   </tr> 
                   @endforeach

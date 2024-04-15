@@ -38,6 +38,6 @@ class HomeController extends Controller
     }
     public function logout(Request $request) {
         Auth::logout();
-        return redirect('/admin/login');
+        return redirect('/mmx_login');
       }
 }

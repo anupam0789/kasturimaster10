@@ -7,14 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EnquiryController; 
-use App\Http\Controllers\CompamyPlanController;
-use App\Http\Controllers\Admin\UserController as User; 
-use App\Http\Controllers\Admin\EnquiryController as Enquiry;
-use App\Http\Controllers\Admin\CompanyController as Company;
+use App\Http\Controllers\CompamyPlanController; 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\CustomerController as Customer;
-
- 
 Auth::routes();
   
 /*
@@ -94,10 +88,13 @@ Route::get('/admin/login', function () {
 }); 
 
 Route::get('/login', function(){ 
-    return redirect()->route('mmx_login');
-}); 
-Route::get('mmx_login', [AuthenticatedSessionController::class, 'create'])->name('mmx_login'); 
-Route::post('mmx_login', [AuthenticatedSessionController::class, 'store'])->name('mmx_login'); 
+       return redirect()->route('mmx_login');
+});
+
+Route::get('mmx_login', [AuthenticatedSessionController::class, 'create'])
+                ->name('mmx_login');
+Route::post('mmx_login', [AuthenticatedSessionController::class, 'store'])->name('mmx_login');
+
   
 /*------------------------------------------ 
 All Normal Users Routes List 
@@ -112,22 +109,22 @@ All Admin Routes List
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:admin'])->group(function () {  
     Route::get('/admin/dashboard', [HomeController::class, 'adminDashbaord'])->name('admin.dashboard');
-    Route::get('/admin/customers', [Customer::class, 'customers'])->name('admin.customers');
-    Route::get('/admin/customer/ajaxdata', [Customer::class, 'customerAjaxData'])->name('admin.customer.ajaxdata');
-    Route::get('/admin/company', [Company::class, 'index'])->name('admin.company');
-    Route::get('/admin/company-plan/{id}', [Company::class, 'list'])->name('company.plan.list');
-    Route::get('/admin/company-plan/edit/{id}', [Company::class, 'companyPlanEdit'])->name('admin.company-plan.edit');
-    Route::post('/admin/update-plan', [Company::class, 'updateCompanyPlan'])->name('admin.update.plan');
-    Route::post('/admin/update/plan-details', [Company::class, 'updateCompanyPlanDetails'])->name('admin.update.plandetails');
-    Route::get('/admin/users', [User::class, 'index'])->name('admin.users');
-    Route::post('/admin/user/store', [User::class, 'store'])->name('admin.user.store');
-    Route::get('/admin/add-user', [User::class, 'create'])->name('admin.add-user');
-    Route::get('/admin/user/edit/{id}', [User::class, 'userEdit'])->name('admin.user.edit');
-    Route::post('/admin/user/update', [User::class, 'userUpdate'])->name('admin.user.update');
+    Route::get('/admin/customers', [App\Http\Controllers\Admin\CustomerController::class, 'customers'])->name('admin.customers');
+    Route::get('/admin/company', [App\Http\Controllers\Admin\CompanyController::class, 'index'])->name('admin.company');
+    Route::get('/admin/company-plan/{id}', [App\Http\Controllers\Admin\CompanyController::class, 'list'])->name('company.plan.list');
+    Route::get('/admin/company-plan/edit/{id}', [App\Http\Controllers\Admin\CompanyController::class, 'companyPlanEdit'])->name('admin.company-plan.edit');
+    Route::post('/admin/update-plan', [App\Http\Controllers\Admin\CompanyController::class, 'updateCompanyPlan'])->name('admin.update.plan');
+    Route::post('/admin/update/plan-details', [App\Http\Controllers\Admin\CompanyController::class, 'updateCompanyPlanDetails'])->name('admin.update.plandetails');
+    Route::get('/admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
+    Route::post('/admin/user/store', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('admin.user.store');
+    Route::get('/admin/add-user', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('admin.add-user');
+    Route::get('/admin/user/edit/{id}', [App\Http\Controllers\Admin\UserController::class, 'userEdit'])->name('admin.user.edit');
+    Route::get('/admin/user/update', [App\Http\Controllers\Admin\UserController::class, 'userUpdate'])->name('admin.user.update');
     Route::post('enquiry-list', 'EnquiryController@list')->name('enquiry.list');
-    Route::get('/admin/enquiry-reject/{id}', [Customer::class, 'rejectCustomer'])->name('admin.enquiry.reject'); 
+    Route::get('/admin/enquiry-reject/{id}', [App\Http\Controllers\Admin\EnquiryController::class, 'rejectCustomer'])->name('admin.enquiry.reject');
+    Route::get('/admin/enquiry-approve/{id}', [App\Http\Controllers\Admin\EnquiryController::class,'approveCustomer'])->name('admin.enquiry.approve');
     Route::post('enquiry-delete', 'EnquiryController@delete')->name('enquiry.delete');
-    Route::get('admin/enquiry-status-send', [Customer::class,'sendStatus'])->name('admin.enquiry.status.send');
+    Route::post('admin/enquiry-status-send', [App\Http\Controllers\Admin\EnquiryController::class,'sendStatus'])->name('admin.enquiry.status.send');
     Route::get('/logout', [HomeController::class, 'logout'])->name('logout  ');
 });
 

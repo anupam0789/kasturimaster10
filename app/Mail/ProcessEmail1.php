@@ -8,15 +8,13 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Mail\Mailables\Address;
- 
 
 class ProcessEmail extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $message;
     public $subject;
-
     /**
      * Create a new message instance.
      */
@@ -24,32 +22,33 @@ class ProcessEmail extends Mailable
     {
         $this->message = $message;
         $this->subject = $subject;
+        
     }
 
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
+    // public function envelope(): Envelope
+    // {
+    //     return new Envelope(
+    //         subject: 'Enquiry Rejected',
+    //     );
+    // }
+
+    public function build()
     {
-        return new Envelope(
-            from: new Address('jeffrey@example.com', 'Jeffrey Way'),
-            subject: 'Order Shipped',
-        );
+        return $this->view('layouts.email')->with('body',['slot' => $this->message]); 
     }
 
     /**
      * Get the message content definition.
      */
-    public function content(): Content
-    {
-        
-        return new Content(
-            view: 'mail.signup_request',
-            with: [ 
-                'slot' => $this->message,
-            ],
-        );
-    }
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         view: 'admin.enquiry.rejectemail',
+    //     );
+    // }
 
     /**
      * Get the attachments for the message.

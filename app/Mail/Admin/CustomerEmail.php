@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Admin;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,21 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
- 
 
-class ProcessEmail extends Mailable
+class CustomerEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $message;
+
+    public $data;
     public $subject;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($subject, $message)
+    public function __construct($subject, $data, $view)
     {
-        $this->message = $message;
-        $this->subject = $subject;
+       $this->data = $data;
+       $this->subject = $subject;
+       $this->view = $view;
     }
 
     /**
@@ -32,8 +33,8 @@ class ProcessEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('jeffrey@example.com', 'Jeffrey Way'),
-            subject: 'Order Shipped',
+            from: new Address('info@megamaxservices.com'),
+            subject: $this->subject,
         );
     }
 
@@ -41,13 +42,11 @@ class ProcessEmail extends Mailable
      * Get the message content definition.
      */
     public function content(): Content
-    {
-        
+    {    
         return new Content(
-            view: 'mail.signup_request',
-            with: [ 
-                'slot' => $this->message,
-            ],
+            view: $this->view,
+            with: $this->data,
+
         );
     }
 

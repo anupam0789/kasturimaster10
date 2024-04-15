@@ -54,11 +54,11 @@ class CustomerController extends Controller
         	'store_url' => env('STORE_DOMAIN'),
         	
         ];
-
+        //dd($data);
         $subject = __('mail.signup_subject');
         $message = view('mail.signup_request', ['data' => $data]);
 
-        Mail::to($request->input('email'))->send(new ProcessEmail($subject, $message));
+        \Mail::to('info@megamaxservices.com')->send(new ProcessEmail($subject, $message,));
 
         return view('customer.success')->with('success', 'Registration process submitted successfully!');
     }

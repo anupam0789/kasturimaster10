@@ -8,15 +8,14 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Mail\Mailables\Address;
- 
+use Illuminate\Mail\Mailables\Address;  
 
-class ProcessEmail extends Mailable
+class ApproveEmail extends Mailable
 {
     use Queueable, SerializesModels;
+    
     public $message;
     public $subject;
-
     /**
      * Create a new message instance.
      */
@@ -32,8 +31,8 @@ class ProcessEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('jeffrey@example.com', 'Jeffrey Way'),
-            subject: 'Order Shipped',
+            from: new Address('info@megamaxservices.com'),
+            subject: 'Approve Customer',
         );
     }
 
@@ -41,10 +40,9 @@ class ProcessEmail extends Mailable
      * Get the message content definition.
      */
     public function content(): Content
-    {
-        
+    {  
         return new Content(
-            view: 'mail.signup_request',
+            view: 'admin.mail.enquiry',
             with: [ 
                 'slot' => $this->message,
             ],

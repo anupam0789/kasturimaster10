@@ -37,6 +37,7 @@
                     <th>Mobile</th>
                     <th>Email</th> 
                     <th>Plan Name</th>
+                    <th>Created Date</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -48,6 +49,7 @@
                     <td>{{ $PlanDetail->_CMmobile ? $PlanDetail->_CMmobile : '--' }}</td>
                     <td>{{ $PlanDetail->_CMemail ? $PlanDetail->_CMemail : '--' }}</td>
                     <td>{{ $PlanDetail->name ? $PlanDetail->name : '--' }}</td>
+                    <td>{{ $PlanDetail->_CMcreatedOn ? date('d, M Y',strtotime($PlanDetail->_CMcreatedOn)) : '--' }}</td>
                     <td><a href="{{ route('admin.company-plan.edit',$PlanDetail->_CMid)}}" ><i class="fas fa-edit"><i></a></td> 
                   </tr> 
                   @endforeach
@@ -59,6 +61,7 @@
                     <th>Mobile</th>
                     <th>Email</th> 
                     <th>Plan</th>
+                    <th>Created Date</th>
                     <th>Action</th> 
                   </tr>
                   </tfoot>
