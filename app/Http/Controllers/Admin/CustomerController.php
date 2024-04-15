@@ -37,7 +37,7 @@ class CustomerController extends Controller
             'username' => $customer->email, 
         ]; 
 
-        Mail::to($customer->email)->send(new CustomerEmail($subject, $mail_data, 'admin.mail.reject'));
+        //Mail::to($customer->email)->send(new CustomerEmail($subject, $mail_data, 'admin.mail.reject'));
         return redirect()->back()->with('success', 'Enquiry rejected successfully');; 
     }
      
