@@ -16,20 +16,8 @@
         <div class="info">
           <a href="#" class="d-block">{{ Auth::user()->name }}</a>
         </div>
-      </div>
-
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
+      </div> 
+      
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -50,13 +38,13 @@
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Customer Leads
-                <span class="right badge badge-danger">New</span>
+                <span class="right badge badge-danger"></span>
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('admin.company')}}" class="nav-link @if(Route::current()->getName() == 'admin.company') active @endif">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-table"></i>
               <p>
                 Company
                 <span class="right badge badge-danger"></span>
@@ -71,7 +59,7 @@
               <p>
                 Users
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
+                <span class="badge badge-info right"></span>
               </p>
             </a>
             <ul class="nav nav-treeview">

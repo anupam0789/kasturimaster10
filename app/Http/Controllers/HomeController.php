@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Mail\UserUnsubscribe; 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Schema;
 
 class HomeController extends Controller
 {
@@ -32,12 +35,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function adminDashbaord(): View
-    {   
-        return view('admin.dashboard');
-    }
+     
     public function logout(Request $request) {
         Auth::logout();
         return redirect('/mmx_login');
-      }
+    }
+    function unsubscribe(Request $request){
+
+        $subject  = "Unsubscribe Request"; 
+        Mail::to($request->email)->send(new UserUnsubscribe($subject, 'unsubscribe'));
+  
+        return view('unsubscribe');
+    }
 }

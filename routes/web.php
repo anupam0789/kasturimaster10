@@ -8,11 +8,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EnquiryController; 
 use App\Http\Controllers\CompamyPlanController;
-use App\Http\Controllers\Admin\UserController as User; 
+use App\Http\Controllers\Admin\UserController as User;  
 use App\Http\Controllers\Admin\EnquiryController as Enquiry;
 use App\Http\Controllers\Admin\CompanyController as Company;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\CustomerController as Customer;
+use App\Http\Controllers\Admin\DashboardController as Dashboard;
 
  
 Auth::routes();
@@ -81,6 +82,8 @@ Route::post('/contact', [EnquiryController::class, 'submitForm'])->name('submit-
 Route::post('/book-demo', [EnquiryController::class, 'submitFormDemo'])->name('submit-enquiry-demo');
 Route::post('/callback', [EnquiryController::class, 'submitFormCallback'])->name('submit-enquiry-callback');
 
+Route::get('/unsubscribe', [HomeController::class, 'unsubscribe'])->name('unsubscribe');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -111,12 +114,14 @@ Route::middleware(['auth', 'user-access:developer'])->group(function () {
 All Admin Routes List 
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:admin'])->group(function () {  
-    Route::get('/admin/dashboard', [HomeController::class, 'adminDashbaord'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [Dashboard::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/customers', [Customer::class, 'customers'])->name('admin.customers');
     Route::get('/admin/customer/ajaxdata', [Customer::class, 'customerAjaxData'])->name('admin.customer.ajaxdata');
     Route::get('/admin/company', [Company::class, 'index'])->name('admin.company');
+    Route::get('/admin/export-customer', [Customer::class, 'exportCustomers'])->name('admin.export-customer');
     Route::get('/admin/company-plan/{id}', [Company::class, 'list'])->name('company.plan.list');
     Route::get('/admin/company-plan/edit/{id}', [Company::class, 'companyPlanEdit'])->name('admin.company-plan.edit');
+    Route::get('/admin/export-company', [Company::class, 'exportCompanies'])->name('admin.export-company');
     Route::post('/admin/update-plan', [Company::class, 'updateCompanyPlan'])->name('admin.update.plan');
     Route::post('/admin/update/plan-details', [Company::class, 'updateCompanyPlanDetails'])->name('admin.update.plandetails');
     Route::get('/admin/users', [User::class, 'index'])->name('admin.users');
@@ -125,7 +130,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/user/edit/{id}', [User::class, 'userEdit'])->name('admin.user.edit');
     Route::post('/admin/user/update', [User::class, 'userUpdate'])->name('admin.user.update');
     Route::post('enquiry-list', 'EnquiryController@list')->name('enquiry.list');
-    Route::get('/admin/enquiry-reject/{id}', [Customer::class, 'rejectCustomer'])->name('admin.enquiry.reject'); 
+    Route::get('/admin/enquiry-reject', [Customer::class, 'rejectCustomer'])->name('admin.enquiry.reject'); 
     Route::post('enquiry-delete', 'EnquiryController@delete')->name('enquiry.delete');
     Route::get('admin/enquiry-status-send', [Customer::class,'sendStatus'])->name('admin.enquiry.status.send');
     Route::get('/logout', [HomeController::class, 'logout'])->name('logout  ');

@@ -9,11 +9,11 @@ use App\Models\PlanToEvent;
 use Illuminate\Http\Request; 
 use Illuminate\Http\Response;
 use App\Models\PlanEventGroup;
+use App\Exports\CompaniesExport; 
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator; 
-use BalajiDharma\LaravelAdminCore\Requests\StoreCompanyRequest;
-use BalajiDharma\LaravelAdminCore\Requests\UpdateCompanyRequest;
+use Illuminate\Support\Facades\Validator;  
 
 class CompanyController extends Controller
 {
@@ -25,17 +25,26 @@ class CompanyController extends Controller
         // $this->middleware('can:company delete', ['only' => ['destroy']]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $companiesQuery = Company::query();  
-        if (request()->has('search')) {
-            $searchTerm = '%' . request()->input('search') . '%';
-            $companiesQuery->where('_CMcompanyName', 'like', $searchTerm);
+        if(isset($request->search)){  
+            $data['PlanDetails'] = DB::table('mm_companymaster')
+            ->leftJoin('plans', 'mm_companymaster._CPlanId', '=', 'plans.id')
+            ->select('_CMid', '_CMcompanyName','_CMstatus','_CMmobile', '_CMemail', '_CMname','_CMcreatedOn', 'plans.id', 'plans.name', 'plans.price')
+            ->orWhere('_CMcompanyName', 'LIKE', "%$request->searchName%")
+            ->orWhere('plans.name', 'LIKE', "%$request->searchName%")
+            ->orderBy('id','DESC') 
+            ->paginate(10); 
+        }else{
+            $data['PlanDetails'] = DB::table('mm_companymaster')
+            ->leftJoin('plans', 'mm_companymaster._CPlanId', '=', 'plans.id')
+            ->select('_CMid', '_CMcompanyName','_CMstatus', '_CMmobile', '_CMemail', '_CMname','_CMcreatedOn', 'plans.id', 'plans.name', 'plans.price')
+            ->orderBy('_CMid','DESC')
+            ->paginate(10); 
         }
         $companies = $companiesQuery;
-        $data['PlanDetails'] = DB::table('mm_companymaster')
-            ->leftJoin('plans', 'mm_companymaster._CPlanId', '=', 'plans.id')
-            ->select('_CMid', '_CMcompanyName', '_CMmobile', '_CMemail', '_CMname','_CMcreatedOn', 'plans.id', 'plans.name', 'plans.price')->get();  
+        
         return view('admin.company.index', compact('companies'),['data' => $data]);
     }
 
@@ -229,5 +238,9 @@ class CompanyController extends Controller
         echo 1;
         exit;
 
+    }
+    public function exportCompanies()
+    {
+        return Excel::download(new CompaniesExport(), "company-plans-".date('dMY').".xlsx");
     }
 }

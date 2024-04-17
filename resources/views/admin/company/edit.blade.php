@@ -152,7 +152,7 @@
                             <div class="form-group">
                                 <label for="website"> </label>
                                 <div class="card-footer">
-                                    <button type="button" id="updateDetail" name="updateDetail" class="btn btn-primary">Update Details</button>
+                                    <button type="button" id="updateDetail" name="updateDetail" class="loadContentLink btn btn-primary">Update Details</button>
                                 </div>  
                             </div>
                         </div>
@@ -262,21 +262,19 @@
         type: 'post',
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data:$("#updateDetailForm").serialize(), 
-        success: function(data) {  
-          if(data==true)
-          {
+        success: function(data) { 
             toastr.options.timeOut = 10000; // 1.5s 
             toastr.success('Company Plan updated successfully');
             location.reload();
-            setTimeout(function(){
-                window.location.href = '/admin/company-plan/edit/{{ $company->_CMid }}';
-            }, 10000);
-              
-          }else{
+                setTimeout(function(){
+                    window.location.href = '/admin/company-plan/edit/{{ $company->_CMid }}';
+                }, 10000);  
+        },
+        error: function(xhr, status, error) { 
             toastr.options.timeOut = 1500; // 1.5s 
-            toastr.error('Something wentt wrong'); 
-          } 
-        }   
+            toastr.error('Something wentt wrong');
+        }  
+        
       });  
     }); 
   </script>

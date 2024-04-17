@@ -19,26 +19,37 @@
     </section> 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
+      <div class="container-fluid"> 
         <div class="row">
           <div class="col-12"> 
             <div class="card">
             @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
+              <div class="alert alert-success">
+                  {{ session('success') }}
+              </div>
             @endif
               <div class="card-header">
                 <h3 class="card-title">Customer List</h3>
               </div>
-              <!-- /.card-header -->
+              <!-- /.card-header --> 
               <div class="card-body" >
-                <table id="example1" class="table table-bordered table-striped " class="display nowrap table-order" style="width:100%" data-order=''>
+              <form action="">
+              <div class="row" > 
+                @include('admin.layouts.search')
+                <div class="col-sm-2 offset-sm-4">
+                  <div class="form-group">
+                    <a href="{{ route('admin.export-customer')}}"  class="form-control btn btn-primary">Export in excel</a>
+                  </div>
+                </div>
+              </div> 
+              </form> 
+
+                <table id="example1" class="table table-bordered table-striped" style="width:100%">
                   <thead>
                   <tr>
+                    <th>#</th>
                     <th>Name</th>
-                    <th>Email</th>
-                    <!-- <th>Domain</th> -->
+                    <th>Email</th> 
                     <th>Company</th>
                     <th>Mobile</th>
                     <th>Created Date</th>
@@ -49,6 +60,7 @@
                   <tbody>   
                   @foreach($customers as $cust) 
                   <tr>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $cust->firstname.' '.$cust->lastname  }}</td>
                     <td>{{ $cust->email }}</td> 
                     <td>{{ $cust->company }}</td>
@@ -56,12 +68,12 @@
                     <td>{{ date('d, M Y',strtotime($cust->created_at)) }}</td> 
                     <td>
                       
-                      <div>
+                      <div> 
                         @if($cust->status == 0)
-                          <a href="#" onclick="approveLead({{ $cust->id }})">
+                          <a href="javascript:void(0)" class="loadContentLink no-underline hover:underline text-red-600" onclick="approveLead({{ $cust->id }})">
                               Approve |
                           </a>
-                          <a href="{{route('admin.enquiry.reject', $cust->id)}}" class="no-underline hover:underline text-red-600">
+                          <a href="javascript:void(0)" class="loadContentLink no-underline hover:underline text-red-600" onclick="rejectLead({{ $cust->id }})" >
                               Reject |
                           </a> 
                         @elseif($cust->status == 1)
@@ -69,25 +81,15 @@
                         @else
                             <p class="text-red-600"> {{ __('Rejected') }}  |
                         @endif
-                        <a href="#" class="btn-default" data-toggle="modal" data-target="#modal-default" data-id="{{ $cust->id }}"><i class="fas fa-eye"></i></a>
+                        <a href="javascript:void()" class="btn-default" data-toggle="modal" data-target="#modal-default" data-id="{{ $cust->id }}"><i class="fas fa-eye"></i></a>
                         </p>
                       </div> 
                    </td>        
                   </tr>
-                  @endforeach
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>First Name</th>
-                    <th>Email</th>
-                    <!-- <th>Domain</th> -->
-                    <th>Company</th>
-                    <th>Mobile</th>
-                    <th>Created Date</th>
-                    <th>Status</th>
-                  </tr>
-                  </tfoot>
+                  @endforeach 
+                  </tbody>  
                 </table>
+                {{ $customers->links('pagination::bootstrap-4') }}
               </div> 
             </div> 
           </div> 
@@ -95,6 +97,7 @@
       </div> 
     </section> 
   </div>
+   
   <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -232,33 +235,63 @@
     });
     
     function approveLead(id)
-    {  
-      if(confirm("Are you want to approve?")){
-
+    {    
+      if(confirm("Are you want to approve?")){ 
         $.ajax({
           url: "{{ route('admin.enquiry.status.send') }}", 
           data:{'customerID':id,'enquiry_status':1}, 
           dataType: "json", 
-          success: function() {  
-            if(data==true)
-            {
-              toastr.options.timeOut = 10000; // 1.5s 
-              toastr.success('Customer leads approve successfully');
-               
-            }else{
-              toastr.options.timeOut = 1500; // 1.5s 
-              toastr.error('Something wentt wrong'); 
-            } 
+          success: function(data) { 
+            toastr.options.timeOut = 10000; // 1.5s 
+            toastr.success('Customer leads approve successfully');
+                
+          },
+          error: function(xhr, status, error) { 
+              var errorMessage = xhr.responseJSON.error;
+              toastr.error('Something went wrong');
           }   
-      });   
+        });   
 
-
-      }
-      else{
+      }else{
           return false;
       }
         
-    } 
+    }
+    
+    function rejectLead(id)
+    {   
+      if(confirm("Are you want to reject lead?")){
+
+        $.ajax({
+          url: "{{ route('admin.enquiry.reject') }}", 
+          data:{'customerID':id,'enquiry_status':2}, 
+          dataType: "json", 
+          success: function(data) { 
+            toastr.options.timeOut = 10000; // 1.5s 
+            toastr.success('Customer leads reject successfully');
+                
+          },
+          error: function(xhr, status, error) { 
+              var errorMessage = xhr.responseJSON.error;
+              toastr.error('Something went wrong');
+          }   
+        });   
+
+      }else{
+          return false;
+      }
+        
+    }
+
+    $('.btn').on('click', function() {
+      
+    var $this = $(this);
+    $this.button('loading');
+    
+    setTimeout(function() {
+       $this.button('reset');
+   }, 5000);
+});
    
   </script>
    
