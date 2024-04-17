@@ -24,28 +24,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
-    {
-         
-        $users = (new User)->newQuery();
-
-        if (request()->has('search')) {
-            $users->where('name', 'Like', '%'.request()->input('search').'%');
+    public function index(Request $request)
+    { 
+        if(isset($request->search)){
+            $users = User::where('name', 'Like', '%'.$request->searchName.'%')->orderBy('id','DESC')->paginate(10);
+        }else{  
+            $users =  User::orderBy('id','DESC')->paginate(5);
         }
-
-        if (request()->query('sort')) {
-            $attribute = request()->query('sort');
-            $sort_order = 'ASC';
-            if (strncmp($attribute, '-', 1) === 0) {
-                $sort_order = 'DESC';
-                $attribute = substr($attribute, 1);
-            }
-            $users->orderBy($attribute, $sort_order);
-        } else {
-            $users->latest();
-        }
-
-        $users = $users->paginate(5)->onEachSide(2);
 
         return view('admin.user.index', compact('users'));
     }

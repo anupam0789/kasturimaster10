@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Customer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller; 
 
 class DashboardController extends Controller
 {
@@ -12,29 +14,36 @@ class DashboardController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $customers = (new Customer)->newQuery();
-        if (request()->has('search')) {
-            $customers->where('firstname', 'Like', '%'.request()->input('search').'%');
+    { 
+        $leadsArray = [];
+        $data['totalLeads'] =  Customer::count(); 
+        $currentLeads =  Customer::selectRaw('DATE(created_at) as create_date, COUNT(*) as totalLeads')
+            ->groupBy('create_date')
+            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        foreach($currentLeads as $latestLeads)
+        {
+            $leadsArray[] = $latestLeads->totalLeads;
         }
+        $data['currentleaddata'] = implode(',', $leadsArray);
+        
+        $lastWeekLeads = Customer::selectRaw('DATE(created_at) as create_date, COUNT(*) as totalLeads')
+            ->groupBy('create_date')
+            ->whereBetween('created_at', 
+                [Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek()]
+            )->get();
+        foreach($lastWeekLeads as $lastWLeads)
+        {
+            $lastWLeadsArray[] = $lastWLeads->totalLeads;
+        } 
+        $data['lastWeekleaddata'] = implode(',', $lastWLeadsArray);
 
-        if (request()->query('sort')) {
-            $attribute = request()->query('sort');
-            $sort_order = 'ASC';
-            if (strncmp($attribute, '-', 1) === 0) {
-                $sort_order = 'DESC';
-                $attribute = substr($attribute, 1);
-            }
-            $customers->orderBy($attribute, $sort_order);
-        } else {
-            $customers->latest();
-        }
-
-        //$customers = Customer::all();
-
-        $customers = $customers->paginate()->onEachSide(2);
-
-        return view('admin.dashboard', compact('customers'));
+        $data['lastWeekTotalLeads'] = Customer::selectRaw('DATE(created_at) as create_date')
+            ->whereBetween('created_at', 
+                [Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek()]
+            )->count();
+         
+             
+        return view('admin.dashboard',$data); 
     }
 
     /**

@@ -1,23 +1,38 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-  
+
+use App\Models\Company;
 use App\Models\Customer; 
 use App\Models\Usermaster;
 use Illuminate\Http\Request;  
-use App\Models\Company;
+use App\Exports\CustomersExport; 
 use App\Mail\Admin\CustomerEmail; 
 use Illuminate\Support\Facades\DB; 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Schema;
  
 
 class CustomerController extends Controller
 {
-    public function customers()
+    public function customers(Request $request)
     {
-        $customers = Customer::orderBy('created_at', 'desc')->get();
+        if(isset($request->search)){
+            $customers = Customer::where('firstname', 'LIKE', "%$request->searchName%")
+            ->orWhere('lastname', 'LIKE', "%$request->searchName%")
+            ->orWhereRaw("concat(firstname, ' ', lastname) like '%" .$request->searchName. "%' ")
+            ->orWhere('email', 'LIKE', "%$request->searchName%")
+            ->orWhere('domain', 'LIKE', "%$request->searchName%")
+            ->orWhere('company', 'LIKE', "%$request->searchName%")
+            ->orWhere('mobile', 'LIKE', "%$request->searchName%")
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+        }else{
+            $customers = Customer::orderBy('created_at', 'DESC')->paginate(10);
+        }
+       
         return view('admin.customer.index',compact('customers'));
     }
 
@@ -27,16 +42,16 @@ class CustomerController extends Controller
         return response()->json($customer);
     }
 
-    public function rejectCustomer($id){
-        
-        $customer = Customer::find($id);
+    public function rejectCustomer(Request $request){
+       
+        $customer = Customer::find($request->customerID);
         $subject = 'Enquiry Rejected'; 
         $mail_data = [
             'firstname' => $customer->firstname,
             'lastname' => $customer->lastname, 
             'username' => $customer->email, 
         ]; 
-
+        echo 1;exit;
         //Mail::to($customer->email)->send(new CustomerEmail($subject, $mail_data, 'admin.mail.reject'));
         return redirect()->back()->with('success', 'Enquiry rejected successfully');; 
     }
@@ -140,6 +155,11 @@ class CustomerController extends Controller
         }
        
         // Other logic or response handling as needed
+    }
+
+    public function exportCustomers()
+    {
+        return Excel::download(new CustomersExport(), "customer-leads-".date('dMY').".xlsx");
     }
 
 }
