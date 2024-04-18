@@ -10,19 +10,7 @@ class CommonHelper
             $tmp_date = strtotime($date);
             return date($format, $tmp_date);
     }
-
-    public function selectSearch(Request $request)
-    {
-        dd(1);
-    	$movies = [];
-        if($request->has('q')){
-            $search = $request->q;
-            $movies =Movie::select("id", "name")
-            		->where('name', 'LIKE', "%$search%")
-            		->get();
-        }
-        return response()->json($movies);
-    }
+ 
 }
  
  
