@@ -9,7 +9,7 @@ $(function () {
 
     $("#example1").DataTable({
       "responsive": true, "lengthChange": true, "autoWidth": false,"searching": false,
-      "buttons": '', "paging": false,
+      "buttons": '', "paging": false, 
        
     }).buttons().container().appendTo('#example1_wrapper .col-md-12:eq(0)');
     $('#example2').DataTable({
@@ -54,5 +54,9 @@ $(function () {
         loaderContainer.style.display = 'none';
     }
 });
+
+ 
+
+
 
 

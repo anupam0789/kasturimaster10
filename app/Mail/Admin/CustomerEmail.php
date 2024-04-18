@@ -33,7 +33,7 @@ class CustomerEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('info@megamaxservices.com'),
+            from: new Address(config('app_config.config_email_support')),
             subject: $this->subject,
         );
     }

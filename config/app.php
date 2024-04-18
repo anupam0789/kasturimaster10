@@ -213,6 +213,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'CommonHelper'=> 'App\Helpers\CommonHelper::class',
+        'ExcelHelper'=> 'App\Helpers\ExcelHelper::class',
+        
     ])->toArray(),
 
 ];

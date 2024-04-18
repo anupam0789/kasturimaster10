@@ -32,7 +32,7 @@ class ProcessEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('jeffrey@example.com', 'Jeffrey Way'),
+            from: new Address(config('app_config.config_email_support')),
             subject: 'Order Shipped',
         );
     }

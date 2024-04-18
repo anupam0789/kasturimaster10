@@ -83,13 +83,11 @@
                     </span>
                     @enderror    
                   </div>
-                </div>
-                <input type="hidden" name="userId" id="userId" value="{{ $user->id }}" >
-                <!-- /.card-body -->
-
-                <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Update</button>
-                </div>
+                </div> 
+                <input type="hidden" name="userId" id="userId" value="{{ $user->id }}" >
+                <!-- /.card-body -->  
+                </div> 
               </form>
             </div> 
           </div> 

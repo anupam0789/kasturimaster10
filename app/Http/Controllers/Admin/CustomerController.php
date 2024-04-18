@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Company;
 use App\Models\Customer; 
 use App\Models\Usermaster;
-use Illuminate\Http\Request;  
-use App\Exports\CustomersExport; 
+use Illuminate\Http\Request;
+use App\Helpers\ExcelHelper; 
 use App\Mail\Admin\CustomerEmail; 
 use Illuminate\Support\Facades\DB; 
 use App\Http\Controllers\Controller;
@@ -37,7 +37,7 @@ class CustomerController extends Controller
     }
 
     public function customerAjaxData(Request $request)
-    { 
+    {   
         $customer= Customer::where('customer_id', $request->customerID)->first(); 
         return response()->json($customer);
     }
@@ -159,7 +159,35 @@ class CustomerController extends Controller
 
     public function exportCustomers()
     {
-        return Excel::download(new CustomersExport(), "customer-leads-".date('dMY').".xlsx");
+        $customerHeader = [
+            "ID",
+            "First Name",
+            "Last Name",
+            "Email",
+            "Domain",
+            "Company",
+            "Mobile",
+            "City",
+            "Status",
+            "Create Date"
+        ];
+        $customerData =  Customer::select(
+            'id',
+            'firstname',
+            'lastname',
+            'email',
+            'domain',
+            'company',
+            'mobile',
+            'city',  
+            \DB::raw('(CASE 
+            WHEN customers.status = "0" THEN "Reject" 
+            WHEN customers.status = "1" THEN "Approve" 
+            ELSE "Approve,Reject" 
+            END) AS status'),
+            \DB::raw("DATE_FORMAT(customers.created_at, '%d, %b %Y') as create_at"), 
+        )->get(); 
+        return Excel::download(new ExcelHelper($customerData, $customerHeader), "customer-leads-".date('dMY').".xlsx"); 
     }
 
 }

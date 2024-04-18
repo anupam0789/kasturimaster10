@@ -2,22 +2,11 @@
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/admin/dashboard" class="brand-link">
-      <img src="{{ asset('/admin/images/logo_white.jpg') }}" height="20px" height="20px" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Kasturi Master</span>
+      <img src="{{ asset('/admin/images/logo_white.jpg') }}"   alt="Kasturi Master Logo" > 
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
-        </div>
-      </div> 
-      
+    <div class="sidebar"> 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -44,7 +33,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('admin.company')}}" class="nav-link @if(Route::current()->getName() == 'admin.company') active @endif">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fas fa-building"></i>
               <p>
                 Company
                 <span class="right badge badge-danger"></span>

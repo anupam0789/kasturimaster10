@@ -30,21 +30,17 @@
             @endif
               <div class="card-header">
                 <h3 class="card-title">Customer List</h3>
+                <a href="{{ route('admin.export-customer')}}" class="btn btn-primary btn-sm float-right" title="Export customer data"><i class="fa fa-file-excel"></i> Export</a>
               </div>
               <!-- /.card-header --> 
               <div class="card-body" >
               <form action="">
               <div class="row" > 
-                @include('admin.layouts.search')
-                <div class="col-sm-2 offset-sm-4">
-                  <div class="form-group">
-                    <a href="{{ route('admin.export-customer')}}"  class="form-control btn btn-primary">Export in excel</a>
-                  </div>
-                </div>
+                @include('admin.layouts.search') 
               </div> 
               </form> 
-
-                <table id="example1" class="table table-bordered table-striped" style="width:100%">
+                 
+                <table id="example1" class="table table-bordered table-hover wrap"  width="100%">
                   <thead>
                   <tr>
                     <th>#</th>
@@ -65,7 +61,7 @@
                     <td>{{ $cust->email }}</td> 
                     <td>{{ $cust->company }}</td>
                     <td>{{ $cust->mobile }}</td>
-                    <td>{{ date('d, M Y',strtotime($cust->created_at)) }}</td> 
+                    <td>{{ \App\Helpers\CommonHelper::dateFormat($cust->created_at,'d, M Y') }}</td> 
                     <td>
                       
                       <div> 
@@ -206,6 +202,7 @@
   
  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+  
   <script>
     $('.btn-default').click(function(){  
       $.ajax({
@@ -268,8 +265,7 @@
           dataType: "json", 
           success: function(data) { 
             toastr.options.timeOut = 10000; // 1.5s 
-            toastr.success('Customer leads reject successfully');
-                
+            toastr.success('Customer leads reject successfully'); 
           },
           error: function(xhr, status, error) { 
               var errorMessage = xhr.responseJSON.error;
@@ -279,20 +275,10 @@
 
       }else{
           return false;
-      }
-        
-    }
-
-    $('.btn').on('click', function() {
-      
-    var $this = $(this);
-    $this.button('loading');
-    
-    setTimeout(function() {
-       $this.button('reset');
-   }, 5000);
-});
+      } 
+    } 
    
+ 
   </script>
    
 @endsection  
