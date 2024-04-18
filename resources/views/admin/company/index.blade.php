@@ -16,8 +16,7 @@
           </div>
         </div>
       </div><!-- /.container-fluid -->
-    </section>
-
+    </section> 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -26,17 +25,13 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Company List</h3>
+                <a href="{{ route('admin.export-company')}}" class="btn btn-primary btn-sm float-right" title="Export company data"><i class="fa fa-file-excel"></i> Export</a>
               </div>
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body"> 
               <form action="">
               <div class="row" > 
-                @include('admin.layouts.search')
-                <div class="col-sm-2 offset-sm-4">
-                  <div class="form-group">
-                    <a href="{{ route('admin.export-company')}}"  class="form-control btn btn-primary">Export in excel</a>
-                  </div>
-                </div>
+                @include('admin.layouts.search') 
               </div> 
               </form> 
                 <table id="example1" class="table table-bordered table-striped">

@@ -27,7 +27,11 @@
             "App\\": "app/",
             "Database\\Factories\\": "Database/Factories/Task",
             "Database\\Seeders\\": "Database/Seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/CommonHelper.php",
+            "app/Helpers/ExcelHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

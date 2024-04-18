@@ -1,6 +1,6 @@
 <div class="col-sm-4">
     <div class="form-group">
-    <input type="text" class="form-control" placeholder="Serch" name="searchName">
+    <input type="text" class="search form-control" placeholder="Serch" name="searchName">
     </div>
 </div>   
 <div class="col-sm-2">

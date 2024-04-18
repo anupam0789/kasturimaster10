@@ -6,7 +6,8 @@ use App\Models\Plan;
 use App\Models\Company;
 use App\Models\PlanEvent;
 use App\Models\PlanToEvent;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
+use App\Helpers\ExcelHelper; 
 use Illuminate\Http\Response;
 use App\Models\PlanEventGroup;
 use App\Exports\CompaniesExport; 
@@ -241,6 +242,26 @@ class CompanyController extends Controller
     }
     public function exportCompanies()
     {
-        return Excel::download(new CompaniesExport(), "company-plans-".date('dMY').".xlsx");
+        $companyPlanHeader =[
+            "ID",
+            "Company Name", 
+            "Name",
+            "Mobile",
+            "Email",
+            "Plan Name",
+            "Status", 
+            "Created Date", 
+        ];
+
+        $comapniesPlanData = DB::table('mm_companymaster')
+            ->leftJoin('plans', 'mm_companymaster._CPlanId', '=', 'plans.id')
+            ->select('_CMid','_CMcompanyName','_CMname', '_CMmobile', '_CMemail', 'plans.name',
+            \DB::raw('(CASE 
+            WHEN _CMstatus = "0" THEN "Inactive" 
+            WHEN _CMstatus = "1" THEN "Active"  
+            END) AS _CMstatus'),
+            \DB::raw("DATE_FORMAT(_CMcreatedOn, '%d, %b %Y') as _CMcreatedOn") 
+            )->get();  
+        return Excel::download(new ExcelHelper($comapniesPlanData, $companyPlanHeader), "company-plans-".date('dMY').".xlsx"); 
     }
 }
